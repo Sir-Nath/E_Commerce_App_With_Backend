@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:full_e_commerce_app/utils/colors.dart';
+import 'package:full_e_commerce_app/utils/dimensions.dart';
 import 'package:full_e_commerce_app/widgets/big_text.dart';
 import 'package:full_e_commerce_app/widgets/icon_and_text.dart';
 import 'package:full_e_commerce_app/widgets/small_text.dart';
@@ -16,7 +19,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   PageController pageController = PageController(viewportFraction: 0.85);
   var _currentPageValue = 0.0;
   double _scaleFactor = 0.85;
-  double height = 220;
+  double height = Dimensions.pageViewContainer;
 
   @override
   void initState() {
@@ -36,7 +39,6 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.height.toString());
     return Column(
       children: [
         Container(
@@ -59,6 +61,68 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             activeShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
           ),
+        ),
+        SizedBox(
+          height: Dimensions.height30,
+        ),
+        Container(
+            margin: EdgeInsets.only(
+              left: Dimensions.width30,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                BigText(text: 'Popular'),
+                SizedBox(
+                  width: Dimensions.width10,
+                ),
+                Container(
+                    margin: const EdgeInsets.only(bottom: 3),
+                    child: BigText(
+                      text: '.',
+                      color: Colors.black26,
+                    )),
+                SizedBox(
+                  width: Dimensions.width10,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 2),
+                  child: SmallText(text: 'Food Pairing'),
+                )
+              ],
+            )),
+        SizedBox(
+          height: 700,
+          child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.only(
+                      left: Dimensions.width20,
+                      right: Dimensions.width20,
+                      bottom: Dimensions.height10),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20),
+                          color: Colors.white38,
+                          image: const DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets\image\food0.png'),
+                          ),
+                        ),
+                      ),
+                      
+                    
+                    ],
+                  ),
+                );
+              }),
         )
       ],
     );
@@ -94,10 +158,13 @@ class _FoodPageBodyState extends State<FoodPageBody> {
       child: Stack(
         children: [
           Container(
-            height: 220,
-            margin: const EdgeInsets.only(left: 7, right: 7),
+            height: Dimensions.pageViewContainer,
+            margin: EdgeInsets.only(
+              left: Dimensions.width10,
+              right: Dimensions.width10,
+            ),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(Dimensions.radius30),
               color: const Color(0xFF69c5df),
               image: const DecorationImage(
                 fit: BoxFit.cover,
@@ -109,9 +176,13 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             alignment: Alignment.bottomCenter,
             child: Container(
               height: 120,
-              margin: const EdgeInsets.only(left: 35, right: 35, bottom: 25),
+              margin: EdgeInsets.only(
+                left: Dimensions.width30,
+                right: Dimensions.width30,
+                bottom: Dimensions.height30,
+              ),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(Dimensions.radius20),
                   color: Colors.white,
                   boxShadow: const [
                     BoxShadow(
@@ -128,17 +199,17 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                         offset: Offset(5, 0))
                   ]),
               child: Container(
-                padding: const EdgeInsets.only(
-                  top: 15,
-                  left: 15,
-                  right: 15,
+                padding: EdgeInsets.only(
+                  top: Dimensions.height15,
+                  left: Dimensions.height15,
+                  right: Dimensions.height15,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     BigText(text: 'Chinese Side'),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: Dimensions.height10,
                     ),
                     Row(
                       children: [
@@ -175,7 +246,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const[
+                      children: const [
                         IconAndText(
                           icon: Icons.circle_sharp,
                           text: 'Normal',

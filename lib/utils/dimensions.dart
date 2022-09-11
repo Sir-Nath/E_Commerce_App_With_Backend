@@ -6,10 +6,11 @@ class Dimensions {
 
   static double pageViewContainer = screenHight / 3.7950413223140496; // 220
   static double pageViewTextContainer = screenHight / 7.03; // 120
-  static double pageView = screenHight / 2.135714285714731; // 320
+  static double pageView = screenHight / 2.6375; // 320
 
 // dynamic height
-  static double height1 = screenHight / 683.4285714285714;
+  static double height1 = screenHight / 834.9090909090909;
+  //683.4285714285714;
   static double height10 = height1 * 10;
   static double height15 = height10 * 1.5;
   static double height20 = height10 * 2;
