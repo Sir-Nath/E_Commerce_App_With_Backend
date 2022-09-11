@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:full_e_commerce_app/utils/colors.dart';
 import 'package:full_e_commerce_app/widgets/big_text.dart';
@@ -35,41 +36,57 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 320,
-      child: PageView.builder(
-        controller: pageController,
-        itemCount: 5,
-        itemBuilder: (context, position) {
-          return _buildPageItem(position);
-        },
-      ),
+    print(MediaQuery.of(context).size.height.toString());
+    return Column(
+      children: [
+        Container(
+          height: 320,
+          child: PageView.builder(
+            controller: pageController,
+            itemCount: 5,
+            itemBuilder: (context, position) {
+              return _buildPageItem(position);
+            },
+          ),
+        ),
+        DotsIndicator(
+          dotsCount: 5,
+          position: _currentPageValue,
+          decorator: DotsDecorator(
+            activeColor: AppColors.mainColor,
+            size: const Size.square(9.0),
+            activeSize: const Size(18.0, 9.0),
+            activeShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
+          ),
+        )
+      ],
     );
   }
 
   Widget _buildPageItem(int index) {
-    Matrix4 matrix = new Matrix4.identity();
-    if(index == _currentPageValue.floor()){
+    Matrix4 matrix = Matrix4.identity();
+    if (index == _currentPageValue.floor()) {
       var currScale = 1 - (_currentPageValue - index) * (1 - _scaleFactor);
-      var currTrans = height * (1 - currScale)/2;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
-    
-    } else if(index == _currentPageValue.floor() + 1){
-      var currScale = _scaleFactor + (_currentPageValue - index + 1) * (1 - _scaleFactor);
-      var currTrans = height * (1 - currScale)/2;
-       matrix = Matrix4.diagonal3Values(1, currScale, 1);
-       matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
-    
-    }else if(index == _currentPageValue.floor() - 1){
+      var currTrans = height * (1 - currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)
+        ..setTranslationRaw(0, currTrans, 0);
+    } else if (index == _currentPageValue.floor() + 1) {
+      var currScale =
+          _scaleFactor + (_currentPageValue - index + 1) * (1 - _scaleFactor);
+      var currTrans = height * (1 - currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1);
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)
+        ..setTranslationRaw(0, currTrans, 0);
+    } else if (index == _currentPageValue.floor() - 1) {
       var currScale = 1 - (_currentPageValue - index) * (1 - _scaleFactor);
-      var currTrans = height * (1 - currScale)/2;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
-    
-    }else{
+      var currTrans = height * (1 - currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)
+        ..setTranslationRaw(0, currTrans, 0);
+    } else {
       var currScale = 0.85;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, height*(1 - _scaleFactor)/2,  0);
-
-
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)
+        ..setTranslationRaw(0, height * (1 - _scaleFactor) / 2, 0);
     }
 
     return Transform(
@@ -94,9 +111,22 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               height: 120,
               margin: const EdgeInsets.only(left: 35, right: 35, bottom: 25),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: Colors.white,
-              ),
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Color(0xFFe8e8e8),
+                        blurRadius: 5.0,
+                        offset: Offset(0, 5)),
+                    BoxShadow(
+                        color: Colors.white,
+                        //blurRadius: 5.0,
+                        offset: Offset(-5, 0)),
+                    BoxShadow(
+                        color: Colors.white,
+                        //blurRadius: 5.0,
+                        offset: Offset(5, 0))
+                  ]),
               child: Container(
                 padding: const EdgeInsets.only(
                   top: 15,
@@ -116,7 +146,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                           children: List.generate(
                             5,
                             (index) {
-                              return Icon(
+                              return const Icon(
                                 Icons.star,
                                 color: AppColors.mainColor,
                                 size: 15,
@@ -145,7 +175,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: const[
                         IconAndText(
                           icon: Icons.circle_sharp,
                           text: 'Normal',
@@ -156,7 +186,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                           text: '1.7km',
                           iconColor: AppColors.mainColor,
                         ),
-                        IconAndText(
+                        const IconAndText(
                           icon: Icons.access_time_rounded,
                           text: '32min',
                           iconColor: AppColors.iconColor2,
