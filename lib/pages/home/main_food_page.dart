@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_e_commerce_app/home/food_page_body.dart';
+import 'package:full_e_commerce_app/pages/home/food_page_body.dart';
 import 'package:full_e_commerce_app/utils/colors.dart';
 import 'package:full_e_commerce_app/utils/dimensions.dart';
 import 'package:full_e_commerce_app/widgets/big_text.dart';
@@ -62,7 +62,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
                       child: Icon(
                         Icons.search,
                         color: Colors.white,
-                        size: Dimensions.iconSize16,
+                        size: Dimensions.iconSize24,
                       ),
                     ),
                   )

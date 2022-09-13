@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:full_e_commerce_app/utils/colors.dart';
 import 'package:full_e_commerce_app/utils/dimensions.dart';
+import 'package:full_e_commerce_app/widgets/app_column.dart';
 import 'package:full_e_commerce_app/widgets/big_text.dart';
 import 'package:full_e_commerce_app/widgets/icon_and_text.dart';
 import 'package:full_e_commerce_app/widgets/small_text.dart';
@@ -91,39 +90,85 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                 )
               ],
             )),
-        SizedBox(
-          height: 700,
-          child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.only(
-                      left: Dimensions.width20,
-                      right: Dimensions.width20,
-                      bottom: Dimensions.height10),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 120,
-                        height: 120,
+        ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.only(
+                    left: Dimensions.width20,
+                    right: Dimensions.width20,
+                    bottom: Dimensions.height10),
+                child: Row(
+                  children: [
+                    //image Section
+                    Container(
+                      width: Dimensions.listViewImgSize,
+                      height: Dimensions.listViewImgSize,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius20),
+                        color: Colors.white38,
+                        image: const DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/image/food0.png'),
+                        ),
+                      ),
+                    ),
+                    //TEXT SECTION
+                    Expanded(
+                      child: Container(
+                        height: Dimensions.listViewTextContSize,
                         decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(Dimensions.radius20),
-                          color: Colors.white38,
-                          image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets\image\food0.png'),
+                            borderRadius: BorderRadius.only(
+                                topRight:
+                                    Radius.circular(Dimensions.radius20),
+                                bottomRight:
+                                    Radius.circular(Dimensions.radius20)),
+                            color: Colors.white),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: Dimensions.width10,
+                              right: Dimensions.width10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              BigText(text: 'Nutrituos Fruit Meal in China'),
+                              SizedBox(height: Dimensions.height10,),
+                              SmallText(text: 'With chinese characteristic'),
+                              SizedBox(height: Dimensions.height10,),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  IconAndText(
+                                    icon: Icons.circle_sharp,
+                                    text: 'Normal',
+                                    iconColor: AppColors.iconColor1,
+                                  ),
+                                  IconAndText(
+                                    icon: Icons.location_on,
+                                    text: '1.7km',
+                                    iconColor: AppColors.mainColor,
+                                  ),
+                                  IconAndText(
+                                    icon: Icons.access_time_rounded,
+                                    text: '32min',
+                                    iconColor: AppColors.iconColor2,
+                                  )
+                                ],
+                              )
+                            ],
                           ),
                         ),
                       ),
-                      
-                    
-                    ],
-                  ),
-                );
-              }),
-        )
+                    )
+                  ],
+                ),
+              );
+            })
       ],
     );
   }
@@ -204,68 +249,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                   left: Dimensions.height15,
                   right: Dimensions.height15,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BigText(text: 'Chinese Side'),
-                    SizedBox(
-                      height: Dimensions.height10,
-                    ),
-                    Row(
-                      children: [
-                        Wrap(
-                          children: List.generate(
-                            5,
-                            (index) {
-                              return const Icon(
-                                Icons.star,
-                                color: AppColors.mainColor,
-                                size: 15,
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SmallText(
-                          text: '4.5',
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SmallText(text: '1287'),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SmallText(text: 'comments')
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        IconAndText(
-                          icon: Icons.circle_sharp,
-                          text: 'Normal',
-                          iconColor: AppColors.iconColor1,
-                        ),
-                        IconAndText(
-                          icon: Icons.location_on,
-                          text: '1.7km',
-                          iconColor: AppColors.mainColor,
-                        ),
-                        const IconAndText(
-                          icon: Icons.access_time_rounded,
-                          text: '32min',
-                          iconColor: AppColors.iconColor2,
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                child: const AppColumn(text: 'Chinese Side',)
               ),
             ),
           ),
