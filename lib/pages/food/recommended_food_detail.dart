@@ -1,87 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:full_e_commerce_app/utils/colors.dart';
 import 'package:full_e_commerce_app/utils/dimensions.dart';
-import 'package:full_e_commerce_app/widgets/app_column.dart';
 import 'package:full_e_commerce_app/widgets/app_icon.dart';
 import 'package:full_e_commerce_app/widgets/big_text.dart';
 import 'package:full_e_commerce_app/widgets/expandable_text_widget.dart';
 
-class PopularFoodDetails extends StatelessWidget {
-  const PopularFoodDetails({Key? key}) : super(key: key);
+class RecommendedFoodDetails extends StatelessWidget {
+  const RecommendedFoodDetails({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          Positioned(
-            left: 0,
-            right: 0,
-            child: Container(
-              width: double.infinity,
-              height: Dimensions.popularFoodImgSize,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/image/food0.png'),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: Dimensions.width20,
-            right: Dimensions.width20,
-            top: Dimensions.height45,
-            child: Row(
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverAppBar(
+            elevation: 0,
+            toolbarHeight: 80,
+            title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 AppIcon(icon: Icons.arrow_back_ios),
                 AppIcon(icon: Icons.shopping_cart_checkout_outlined)
               ],
             ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            top: Dimensions.popularFoodImgSize - 20,
-            child: Container(
-              padding: EdgeInsets.only(
-                left: Dimensions.width20,
-                right: Dimensions.width20,
-                top: Dimensions.height20,
-              ),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(Dimensions.radius20),
-                    topLeft: Radius.circular(Dimensions.radius20),
+            bottom: PreferredSize(
+                preferredSize: Size.fromHeight(20),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(Dimensions.radius20),
+                        topRight: Radius.circular(Dimensions.radius20)),
+                    color: Colors.white,
                   ),
-                  color: Colors.white),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const AppColumn(text: 'Chinese Side'),
-                  SizedBox(
-                    height: Dimensions.height20,
-                  ),
-                  BigText(text: 'Introduce'), 
-                  SizedBox(
-                    height: Dimensions.height20,
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: ExpandableTextWidget(text: test,),
-                    ),
-                   )
-                ],
+                  width: double.maxFinite,
+                  padding: const EdgeInsets.only(top: 5, bottom: 10),
+                  child: Center(
+                      child: BigText(
+                    text: 'Chinese Side',
+                    size: Dimensions.font26,
+                  )),
+                )),
+            pinned: true,
+            backgroundColor: AppColors.yellowColor,
+            expandedHeight: 300,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Image.asset(
+                'assets/image/food0.png',
+                width: double.maxFinite,
+                fit: BoxFit.cover,
               ),
             ),
           ),
+          SliverToBoxAdapter(
+            child: Column(children: [
+              Container(
+                margin: EdgeInsets.only(
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                ),
+                child: ExpandableTextWidget(
+                  text: test + test + test,
+                ),
+              )
+            ]),
+          )
         ],
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: Column(mainAxisSize: MainAxisSize.min, children: [
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: Dimensions.width20 * 2.5,
+            vertical: Dimensions.height10,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AppIcon(
+                icon: Icons.remove,
+                backgroundColor: AppColors.mainColor,
+                iconColor: Colors.white,
+                iconSize: Dimensions.iconSize24,
+              ),
+              BigText(text: '\$12.88 '+ 'X '+ '0', color: AppColors.mainBlackColor,size: Dimensions.font26,),
+              AppIcon(
+                icon: Icons.add,
+                backgroundColor: AppColors.mainColor,
+                iconColor: Colors.white,
+                iconSize: Dimensions.iconSize24,
+              )
+            ],
+          ),
+        ),
+        Container(
         height: Dimensions.bottomHeightBar,
         padding: EdgeInsets.only(
           top: Dimensions.height30,
@@ -109,25 +121,10 @@ class PopularFoodDetails extends StatelessWidget {
                 borderRadius: BorderRadius.circular(Dimensions.radius20),
                 color: Colors.white,
               ),
-              child: Row(children: [
-                const Icon(
-                  Icons.remove,
-                  color: AppColors.signColor,
-                ),
-                SizedBox(
-                  width: Dimensions.width5,
-                ),
-                BigText(
-                  text: '0',
-                ),
-                SizedBox(
-                  width: Dimensions.width5,
-                ),
-                const Icon(
-                  Icons.add,
-                  color: AppColors.signColor,
-                )
-              ]),
+              child: const Icon(
+                Icons.favorite, 
+                color: AppColors.mainColor,
+              )
             ),
             Container(
               padding: EdgeInsets.only(
@@ -148,6 +145,7 @@ class PopularFoodDetails extends StatelessWidget {
           ],
         ),
       ),
+      ]),
     );
   }
 }
