@@ -1,27 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:full_e_commerce_app/controllers/recommended_products_controller.dart';
+import 'package:full_e_commerce_app/utils/app_constants.dart';
 import 'package:full_e_commerce_app/utils/colors.dart';
 import 'package:full_e_commerce_app/utils/dimensions.dart';
 import 'package:full_e_commerce_app/widgets/app_icon.dart';
 import 'package:full_e_commerce_app/widgets/big_text.dart';
 import 'package:full_e_commerce_app/widgets/expandable_text_widget.dart';
+import 'package:get/get.dart';
 
 class RecommendedFoodDetails extends StatelessWidget {
-  const RecommendedFoodDetails({Key? key}) : super(key: key);
+  final int listId;
+  const RecommendedFoodDetails({
+    Key? key,
+    required this.listId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var food = Get.find<RecommendedProductController>().recommendedProductList[listId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             elevation: 0,
             toolbarHeight: 80,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                AppIcon(icon: Icons.arrow_back_ios),
+              children: [
+                GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: AppIcon(icon: Icons.arrow_back_ios)),
                 AppIcon(icon: Icons.shopping_cart_checkout_outlined)
               ],
             ),
@@ -38,7 +51,7 @@ class RecommendedFoodDetails extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 5, bottom: 10),
                   child: Center(
                       child: BigText(
-                    text: 'Chinese Side',
+                    text: food.name ,
                     size: Dimensions.font26,
                   )),
                 )),
@@ -46,8 +59,8 @@ class RecommendedFoodDetails extends StatelessWidget {
             backgroundColor: AppColors.yellowColor,
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                'assets/image/food0.png',
+              background: Image.network(
+                '${AppConstants.BASE_URL}${AppConstants.UPLOAD_URL}/${food.img!}',
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
@@ -61,7 +74,7 @@ class RecommendedFoodDetails extends StatelessWidget {
                   right: Dimensions.width20,
                 ),
                 child: ExpandableTextWidget(
-                  text: test + test + test,
+                  text: food.description,
                 ),
               )
             ]),
@@ -83,7 +96,11 @@ class RecommendedFoodDetails extends StatelessWidget {
                 iconColor: Colors.white,
                 iconSize: Dimensions.iconSize24,
               ),
-              BigText(text: '\$12.88 '+ 'X '+ '0', color: AppColors.mainBlackColor,size: Dimensions.font26,),
+              BigText(
+                text: '\$${food.price} ' + 'X ' + '0',
+                color: AppColors.mainBlackColor,
+                size: Dimensions.font26,
+              ),
               AppIcon(
                 icon: Icons.add,
                 backgroundColor: AppColors.mainColor,
@@ -94,57 +111,56 @@ class RecommendedFoodDetails extends StatelessWidget {
           ),
         ),
         Container(
-        height: Dimensions.bottomHeightBar,
-        padding: EdgeInsets.only(
-          top: Dimensions.height30,
-          bottom: Dimensions.height30,
-          right: Dimensions.width20,
-          left: Dimensions.width20,
-        ),
-        decoration: BoxDecoration(
-          color: AppColors.buttonBackgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(Dimensions.radius20 * 2),
-            topRight: Radius.circular(Dimensions.radius20 * 2),
+          height: Dimensions.bottomHeightBar,
+          padding: EdgeInsets.only(
+            top: Dimensions.height30,
+            bottom: Dimensions.height30,
+            right: Dimensions.width20,
+            left: Dimensions.width20,
+          ),
+          decoration: BoxDecoration(
+            color: AppColors.buttonBackgroundColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Dimensions.radius20 * 2),
+              topRight: Radius.circular(Dimensions.radius20 * 2),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  padding: EdgeInsets.only(
+                      top: Dimensions.height20,
+                      bottom: Dimensions.height20,
+                      right: Dimensions.width20,
+                      left: Dimensions.width20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+                    color: Colors.white,
+                  ),
+                  child: const Icon(
+                    Icons.favorite,
+                    color: AppColors.mainColor,
+                  )),
+              Container(
+                padding: EdgeInsets.only(
+                    top: Dimensions.height20,
+                    bottom: Dimensions.height20,
+                    right: Dimensions.width20,
+                    left: Dimensions.width20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      Dimensions.radius20,
+                    ),
+                    color: AppColors.mainColor),
+                child: BigText(
+                  text: '£10 Add to Cart',
+                  color: Colors.white,
+                ),
+              )
+            ],
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                  top: Dimensions.height20,
-                  bottom: Dimensions.height20,
-                  right: Dimensions.width20,
-                  left: Dimensions.width20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimensions.radius20),
-                color: Colors.white,
-              ),
-              child: const Icon(
-                Icons.favorite, 
-                color: AppColors.mainColor,
-              )
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                  top: Dimensions.height20,
-                  bottom: Dimensions.height20,
-                  right: Dimensions.width20,
-                  left: Dimensions.width20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    Dimensions.radius20,
-                  ),
-                  color: AppColors.mainColor),
-              child: BigText(
-                text: '£10 Add to Cart',
-                color: Colors.white,
-              ),
-            )
-          ],
-        ),
-      ),
       ]),
     );
   }
