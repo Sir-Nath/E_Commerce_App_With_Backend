@@ -6,6 +6,8 @@ import 'package:full_e_commerce_app/data/repository/recommended_products_repo.da
 import 'package:full_e_commerce_app/utils/app_constants.dart';
 import 'package:get/get.dart';
 
+//initializing ApiClient, Repository and controllers
+
 Future<void> init()async{
   //api client
   Get.lazyPut(() => ApiClient(appBaseUrl: AppConstants.BASE_URL));

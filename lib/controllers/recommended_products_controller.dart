@@ -18,6 +18,7 @@ class RecommendedProductController extends GetxController {
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
 
+  //this is another method that calls a method in the repo and confirm it status code then convert to a list from json
   Future<void> getRecommendedProductList()async{
     Response response = await recommendedProductRepo.getRecommendedProductList();
     if(response.statusCode == 200){
