@@ -4,11 +4,14 @@ import 'package:full_e_commerce_app/pages/food/recommended_food_detail.dart';
 import 'package:full_e_commerce_app/pages/home/main_food_page.dart';
 import 'package:get/get.dart';
 
+import '../pages/cart/cart_page.dart';
+
 class RouteHelper{
   //defining routes name
   static const String initial = '/';
   static const String popularFood = '/popular-food';
   static const String recommendedFood = '/recommended-food';
+  static const String cartPage = '/cart-page';
 
   //writing a method that will return the route name and can accept parameters when called
   static String getPopularFood(int pageId){
@@ -16,6 +19,7 @@ class RouteHelper{
    return '$popularFood?pageId=$pageId';
   }
   static String getInitial() => initial;
+  static String getCartPage()=> cartPage;
   static String getRecommendedFood(int listId) => '$recommendedFood?listId=$listId';
 
 
@@ -32,6 +36,9 @@ class RouteHelper{
       return RecommendedFoodDetails(listId: int.parse(listId!));
     } ,
     transition: Transition.fadeIn
-    )
+    ),
+    GetPage(name: cartPage, page: (){
+      return const CartPage();
+    })
   ];
 }
