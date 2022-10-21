@@ -8,16 +8,16 @@ import 'package:full_e_commerce_app/widgets/app_icon.dart';
 import 'package:full_e_commerce_app/widgets/big_text.dart';
 import 'package:full_e_commerce_app/widgets/expandable_text_widget.dart';
 import 'package:get/get.dart';
-
 import '../../controllers/cart_controller.dart';
 import '../../routes/route_helper.dart';
-import '../cart/cart_page.dart';
 
 class RecommendedFoodDetails extends StatelessWidget {
   final int listId;
+  final String page;
   const RecommendedFoodDetails({
     Key? key,
     required this.listId,
+    required this.page,
   }) : super(key: key);
 
   @override
@@ -40,7 +40,12 @@ class RecommendedFoodDetails extends StatelessWidget {
               children: [
                 GestureDetector(
                     onTap: () {
-                      Get.back();
+                      if(page=='cartPage'){
+                        Get.toNamed(RouteHelper.getCartPage());
+                      }else{
+                        Get.toNamed(RouteHelper.getInitial());
+                      }
+                     //  Get.back();
                     },
                     child: const AppIcon(icon: Icons.arrow_back_ios)),
                 //const AppIcon(icon: Icons.shopping_cart_checkout_outlined)
@@ -49,7 +54,9 @@ class RecommendedFoodDetails extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Get.toNamed(RouteHelper.getCartPage());
+                          if (controller.totalItems >= 1) {
+                            Get.toNamed(RouteHelper.getCartPage());
+                          }
                         },
                         child: const AppIcon(
                             icon: Icons.shopping_cart_checkout_outlined),
@@ -229,10 +236,3 @@ class RecommendedFoodDetails extends StatelessWidget {
     );
   }
 }
-
-String test =
-    '''According to (World Health Organization, 2020), Malnutrition is characterized by deficiencies, excesses, or imbalances in a person's nutrient- and/or energy-intake. India battles tremendously with malnutrition and even the children are so affected. (De & Chattopadhyay, 2019) stated Children are particularly susceptible to malnutrition because they consume foods with poor nutritional content and because food is distributed inequitably among households. Additionally, due to inadequate care, young children experience frequent infections and a variety of illnesses that can have a deadly or developmentally delayed consequence.
-Malnutrition has been for a very long time and many countries have suffered at it hand, it has led to the death of many. (Keusch, 2003) stated that Malnutrition increased a person's susceptibility to infection and that infection worsened nutritional status, starting a vicious cycle of malnutrition-infection that would eventually result in kwashiorkor (whose clinical manifestations were typically also brought on by an infection) and, if left untreated will lead to death. 
-Malnutrition has cost India a lot and even affected the world economy. The cost of all types of malnutrition, including undernutrition, micronutrient deficiencies, and over nutrition, has been estimated at US3.5 trillion annually for the world economy. Investment in primary level prevention interventions like health promotion and education makes it interesting to learn from these historical data and studies (Sharma, 2021). While a lot of literature 
-dealt with tackling malnutrition in India and even in children as  (Sahu et al., 2015) mentioned that India has a serious public health issue with malnutrition among children under the age of five, not many literatures tackled the problem of malnutrition by recommending effective health policies to help reduced it.
-''';

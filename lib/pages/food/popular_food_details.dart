@@ -17,7 +17,8 @@ import '../cart/cart_page.dart';
 // ignore: must_be_immutable
 class PopularFoodDetails extends StatelessWidget {
   int pageId;
-  PopularFoodDetails({Key? key, required this.pageId}) : super(key: key);
+  String page;
+  PopularFoodDetails({Key? key, required this.pageId, required this.page}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,12 @@ class PopularFoodDetails extends StatelessWidget {
               children: [
                 GestureDetector(
                     onTap: () {
-                      Get.back();
+                      if(page=='cartPage'){
+                        Get.toNamed(RouteHelper.getCartPage());
+                      }else{
+                        Get.toNamed(RouteHelper.getInitial());
+                      }
+                      //Get.back();
                     },
                     child: const AppIcon(icon: Icons.arrow_back_ios)),
                 GetBuilder<PopularProductController>(builder: (controller) {
@@ -61,7 +67,9 @@ class PopularFoodDetails extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          Get.toNamed(RouteHelper.getCartPage());
+                          if(controller.totalItems>=1) {
+                            Get.toNamed(RouteHelper.getCartPage());
+                          }
                         },
                         child: const AppIcon(
                             icon: Icons.shopping_cart_checkout_outlined),
